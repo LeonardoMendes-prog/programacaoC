@@ -1,2 +1,1 @@
-Olá!
-Aqui há apenas alguns desafios feitos pela faculdade em Linguagem em C.
+Aqui coloco todo meu aprendizado e trajetória com Linguagem em C, desde o inicio

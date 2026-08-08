@@ -1,0 +1,72 @@
+#include <stdio.h>
+
+// Torre com recursividade
+void moverTorre(int casas) {
+    if (casas > 0) {
+        printf("Direita\n");
+        moverTorre(casas - 1);
+    }
+}
+
+// Bispo com recursividade
+void moverBispo(int casas) {
+    if (casas > 0) {
+        printf("Cima\n");
+        printf("Direita\n");
+        moverBispo(casas - 1);
+    }
+}
+
+// Rainha com recursividade
+void moverRainha(int casas) {
+    if (casas > 0) {
+        printf("Esquerda\n");
+        moverRainha(casas - 1);
+    }
+}
+
+// Cavalo com loops aninhados
+void moverCavalo(int movimentos) {
+    for (int m = 0; m < movimentos; m++) {
+        for (int i = 0; i < 2; i++) {
+            printf("Cima\n");   // duas casas para cima
+        }
+        printf("Direita\n");    // uma casa para direita
+    }
+}
+
+int main() {
+    int escolha, casas;
+
+    printf("Escolha a peça para mover:\n");
+    printf("1 - Torre\n");
+    printf("2 - Bispo\n");
+    printf("3 - Rainha\n");
+    printf("4 - Cavalo\n");
+    printf("Digite o número da peça: ");
+    scanf("%d", &escolha);
+
+    printf("Digite o número de casas/movimentos: ");
+    scanf("%d", &casas);
+
+    printf("\nMovimento escolhido:\n");
+
+    switch (escolha) {
+        case 1:
+            moverTorre(casas);
+            break;
+        case 2:
+            moverBispo(casas);
+            break;
+        case 3:
+            moverRainha(casas);
+            break;
+        case 4:
+            moverCavalo(casas);
+            break;
+        default:
+            printf("Opção inválida!\n");
+    }
+
+    return 0;
+}

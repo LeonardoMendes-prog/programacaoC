@@ -1,1 +1,148 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
+int main() {
+    char estado1[50], estado2[50], buffer[100];
+    int populacao1, populacao2, pontos1, pontos2;
+    float area1, area2, pib1, pib2;
+    float densidade1, densidade2;
+
+    // Entrada do primeiro estado
+    printf("Digite o nome do primeiro estado: ");
+    fgets(estado1, sizeof(estado1), stdin);
+    estado1[strcspn(estado1, "\n")] = '\0';
+
+    printf("Digite a população:\n");
+    fgets(buffer, sizeof(buffer), stdin);
+    populacao1 = atoi(buffer);
+
+    printf("Digite a área:\n");
+    fgets(buffer, sizeof(buffer), stdin);
+    area1 = atof(buffer);
+
+    printf("Digite o PIB:\n");
+    fgets(buffer, sizeof(buffer), stdin);
+    pib1 = atof(buffer);
+
+    printf("Digite pontos turísticos:\n");
+    fgets(buffer, sizeof(buffer), stdin);
+    pontos1 = atoi(buffer);
+
+    densidade1 = populacao1 / area1;
+
+    // Entrada do segundo estado
+    printf("\nDigite o nome do segundo estado: ");
+    fgets(estado2, sizeof(estado2), stdin);
+    estado2[strcspn(estado2, "\n")] = '\0';
+
+    printf("Digite a população:\n");
+    fgets(buffer, sizeof(buffer), stdin);
+    populacao2 = atoi(buffer);
+
+    printf("Digite a área:\n");
+    fgets(buffer, sizeof(buffer), stdin);
+    area2 = atof(buffer);
+
+    printf("Digite o PIB:\n");
+    fgets(buffer, sizeof(buffer), stdin);
+    pib2 = atof(buffer);
+
+    printf("Digite pontos turísticos:\n");
+    fgets(buffer, sizeof(buffer), stdin);
+    pontos2 = atoi(buffer);
+
+    densidade2 = populacao2 / area2;
+
+    // Menu dinâmico para escolha de dois atributos
+    int opcao1, opcao2;
+    printf("\nEscolha o primeiro atributo para comparar:\n");
+    printf("1 - População\n");
+    printf("2 - Área\n");
+    printf("3 - PIB\n");
+    printf("4 - Pontos turísticos\n");
+    printf("5 - Densidade demográfica\n");
+    fgets(buffer, sizeof(buffer), stdin);
+    opcao1 = atoi(buffer);
+
+    // Segundo menu sem repetir a primeira escolha
+    printf("\nEscolha o segundo atributo para comparar:\n");
+    for (int i = 1; i <= 5; i++) {
+        if (i == opcao1) continue; // não mostra o atributo já escolhido
+        switch(i) {
+            case 1: printf("1 - População\n"); break;
+            case 2: printf("2 - Área\n"); break;
+            case 3: printf("3 - PIB\n"); break;
+            case 4: printf("4 - Pontos turísticos\n"); break;
+            case 5: printf("5 - Densidade demográfica\n"); break;
+        }
+    }
+    fgets(buffer, sizeof(buffer), stdin);
+    opcao2 = atoi(buffer);
+
+    // Função auxiliar para pegar valor do atributo
+    float primeiroAtributo_estado1, primeiroAtributo_estado2;
+    float segundoAtributo_estado1, segundoAtributo_estado2;
+
+
+    switch(opcao1) {
+        case 1: primeiroAtributo_estado1 = populacao1; primeiroAtributo_estado2 = populacao2; break;
+        case 2: primeiroAtributo_estado1 = area1; primeiroAtributo_estado2 = area2; break;
+        case 3: primeiroAtributo_estado1 = pib1; primeiroAtributo_estado2 = pib2; break;
+        case 4: primeiroAtributo_estado1 = pontos1; primeiroAtributo_estado2 = pontos2; break;
+        case 5: primeiroAtributo_estado1 = densidade1; primeiroAtributo_estado2 = densidade2; break;
+    }
+
+    switch(opcao2) {
+        case 1: segundoAtributo_estado1 = populacao1; segundoAtributo_estado2 = populacao2; break;
+        case 2: segundoAtributo_estado1 = area1; segundoAtributo_estado2 = area2; break;
+        case 3: segundoAtributo_estado1 = pib1; segundoAtributo_estado2 = pib2; break;
+        case 4: segundoAtributo_estado1 = pontos1; segundoAtributo_estado2 = pontos2; break;
+        case 5: segundoAtributo_estado1 = densidade1; segundoAtributo_estado2 = densidade2; break;
+    }
+
+    // Comparação dos dois atributos
+    int pontosEstado1 = 0, pontosEstado2 = 0;
+
+    // Primeiro atributo
+    if (opcao1 == 5) { // densidade: menor vence
+        if (primeiroAtributo_estado1 < primeiroAtributo_estado2) pontosEstado1++;
+        else if (primeiroAtributo_estado2 < primeiroAtributo_estado1) pontosEstado2++;
+    } else { // regra geral: maior vence
+        if (primeiroAtributo_estado1 > primeiroAtributo_estado2) pontosEstado1++;
+        else if (primeiroAtributo_estado2 > primeiroAtributo_estado1) pontosEstado2++;
+    }
+
+    // Segundo atributo
+    if (opcao2 == 5) { // densidade: menor vence
+        if (segundoAtributo_estado1 < segundoAtributo_estado2) pontosEstado1++;
+        else if (segundoAtributo_estado2 < segundoAtributo_estado1) pontosEstado2++;
+    } else { // regra geral: maior vence
+        if (segundoAtributo_estado1 > segundoAtributo_estado2) pontosEstado1++;
+        else if (segundoAtributo_estado2 > segundoAtributo_estado1) pontosEstado2++;
+    }
+
+    // Soma dos atributos
+    float somaEstado1 = primeiroAtributo_estado1 + segundoAtributo_estado1;
+    float somaEstado2 = primeiroAtributo_estado2 + segundoAtributo_estado2;
+
+    // Exibição clara do resultado
+    printf("\n=== Resultado da Rodada ===\n");
+    printf("Estado 1: %s\n", estado1);
+    printf("Estado 2: %s\n", estado2);
+    printf("1° escolhido: %d -> %.2f vs %.2f\n", opcao1, primeiroAtributo_estado1, primeiroAtributo_estado2);
+    printf("2° escolhido: %d -> %.2f vs %.2f\n", opcao2, segundoAtributo_estado1, segundoAtributo_estado2);
+    printf("Soma dos atributos:\n");
+    printf("%s: %.2f\n", estado1, somaEstado1);
+    printf("%s: %.2f\n", estado2, somaEstado2);
+
+    if (somaEstado1 > somaEstado2) {
+        printf("➡ A carta vencedora é %s!\n", estado1);
+    } else if (somaEstado2 > somaEstado1) {
+        printf("➡ A carta vencedora é %s!\n", estado2);
+    } else {
+        printf("➡ Empate!\n");
+    }
+
+    return 0;
+}
